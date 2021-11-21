@@ -2,21 +2,24 @@ package edu.escuelaing.arsw.boardUI.services;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import edu.escuelaing.arsw.boardUI.model.*;
 
 public interface IBoardUIServices {
     
-    public List<Room> getUserRooms();
-    
-    public void createNewRoom();
-
-    public List<File> getRoomFiles();
-
-    public void createNewFile();
-
-    public void createNewRoomPermission();
-
     public boolean authenticateUser(String username, String password);
 
-    public void createUser();
+    public void createUser(User user) throws BoardUIServicesException;
+
+    public List<Room> getUserRooms(String username) throws BoardUIServicesException;
+    
+    public void createNewRoom(Room room, String username) throws BoardUIServicesException;
+
+    public void createRoomAccessPermission(String roomUrl, int userId);
+
+    public List<File> getRoomFiles(int roomId) throws BoardUIServicesException;
+
+    public void createNewFile(MultipartFile file, String extension, int roomId);
+    
 }

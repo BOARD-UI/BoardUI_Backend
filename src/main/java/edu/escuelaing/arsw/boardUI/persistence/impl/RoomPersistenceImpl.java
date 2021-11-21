@@ -46,7 +46,7 @@ public class RoomPersistenceImpl implements IRoomPersistence {
     }
 
     @Override
-    public List<File> loadRoomFiles(int roomID, int userID) {
+    public List<File> loadRoomFiles(int roomID) {
         List<File> files = new LinkedList<>();
         Query query = manager.createNativeQuery("SELECT * from files WHERE room_id = ?", File.class);
         query.setParameter(1, roomID);  

@@ -30,8 +30,8 @@ public class RoomServices implements IRoomServices{
     }
 
     @Override
-    public List<File> loadRoomFiles(int roomID, int userID) {
-        return rp.loadRoomFiles(roomID, userID);
+    public List<File> loadRoomFiles(int roomID) {
+        return rp.loadRoomFiles(roomID);
     }
 
     @Override
