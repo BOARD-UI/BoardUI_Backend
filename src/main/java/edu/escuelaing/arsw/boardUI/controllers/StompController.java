@@ -7,20 +7,22 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 
+import edu.escuelaing.arsw.boardUI.model.StringChange;
+
 @Controller
-public class StompController {
+public class STOMPController {
 	
 	@Autowired
 	SimpMessagingTemplate msgt;
 
-	@MessageMapping("/room/{roomId}") 
-	public void handleRoomEvent(@DestinationVariable String roomId) throws Exception {
-		
+	@MessageMapping("/app/room.{roomFileId}")    
+	public void handlePointEvent(StringChange strChange, @DestinationVariable String roomFileId) throws Exception {
+		msgt.convertAndSend("/app/roomFile."+roomFileId, strChange);
 	}
 
-	@SubscribeMapping("/room/{roomId}")
-	public String initialReply(@DestinationVariable String roomId) throws Exception {
-		return "Hello There!";
+	@SubscribeMapping("/app/room.{roomFileId}")
+	public String initialReply() throws Exception {
+		return "hello there!";
 	}
 
 }

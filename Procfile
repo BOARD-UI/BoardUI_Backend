@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/BOARD-UI-0.0.1-SNAPSHOT.jar -Dspring.datasource.url=jdbc:postgresql://ec2-34-199-209-37.compute-1.amazonaws.com:5432/dagmr1b1f5v69o -Dspring.datasource.username=rkcgqucynppqcx -Dspring.datasource.password=5b9ea56a53766043dac1da34772431a001615faf25bf8579db62df8b7541f721
+web: java -Dserver.port=$PORT -jar target/BOARD-UI-0.0.1-SNAPSHOT.jar

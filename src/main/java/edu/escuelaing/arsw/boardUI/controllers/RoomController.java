@@ -2,12 +2,9 @@ package edu.escuelaing.arsw.boardUI.controllers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.annotation.Generated;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -21,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 
 import edu.escuelaing.arsw.boardUI.services.BoardUIServicesException;
 import edu.escuelaing.arsw.boardUI.services.impl.*;
@@ -46,15 +41,6 @@ public class RoomController {
 
     @Autowired
     PermissionServices ps;
-
-    @Autowired
-    private Environment env;
-
-    @GetMapping("/prop/{key}")
-    @ResponseBody
-    public String getProp(@PathVariable String key){
-        return ""+key.replaceAll("_", ".")+": "+env.getProperty(key.replaceAll("_", "."));
-    }
 
     @GetMapping("/rooms")
     @ResponseBody
@@ -118,4 +104,18 @@ public class RoomController {
         }
         return "Loaded!";
 	}
+
+    @PostMapping("/rooms/{roomUrl}")
+    @ResponseBody
+    public String createNewRoom(Principal principal, @PathVariable("roomUrl") String roomUrl) throws BoardUIServicesException{
+        User currentUser = us.getUserByUsername(principal.getName());
+        Room currentRoom = rs.getRoomByURL(roomUrl);
+        Permission permission = new Permission();
+        permission.setRoomId(currentRoom.getRoomId());
+        permission.setUserId(currentUser.getId());
+        permission.setType("Access");
+        System.out.println(currentRoom.getRoomId()+" "+currentUser.getId());
+        ps.savePermission(permission);
+        return "Created!";
+    }
 }
