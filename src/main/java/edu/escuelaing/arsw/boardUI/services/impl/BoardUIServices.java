@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import edu.escuelaing.arsw.boardUI.model.*;
 import edu.escuelaing.arsw.boardUI.services.BoardUIServicesException;
 import edu.escuelaing.arsw.boardUI.services.IBoardUIServices;
-
 @Service
 public class BoardUIServices implements IBoardUIServices{
 
@@ -88,7 +87,7 @@ public class BoardUIServices implements IBoardUIServices{
 
     @Override
     public void createUser(User user) throws BoardUIServicesException{
-        us.addUser(user);
+        us.addUser(user); 
     }
     
 }
