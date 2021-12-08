@@ -117,10 +117,9 @@ public class BoardUIApiController {
         }
     }
 
-    @CrossOrigin
-    @RequestMapping(path = "/beans", method = RequestMethod.GET)
-    public ResponseEntity<?> getBeans() {
-        return new ResponseEntity<>(context.getBeanDefinitionNames() ,HttpStatus.OK);  
-    }
+    @RequestMapping(path = "/message", method = RequestMethod.GET)
+	public String message() {
+		return "Congrats, Application Deployed Successfully";
+	}
 	
 }
