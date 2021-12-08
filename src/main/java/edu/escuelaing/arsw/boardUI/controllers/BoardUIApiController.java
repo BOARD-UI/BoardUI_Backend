@@ -24,9 +24,6 @@ import org.springframework.http.ResponseEntity;
 public class BoardUIApiController {
 
     @Autowired
-    private ApplicationContext context;
-
-    @Autowired
     BoardUIServices bs;
 
     @CrossOrigin
