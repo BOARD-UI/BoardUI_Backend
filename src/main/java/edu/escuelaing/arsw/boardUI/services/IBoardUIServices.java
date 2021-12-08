@@ -16,7 +16,7 @@ public interface IBoardUIServices {
     
     public void createNewRoom(Room room, String username) throws BoardUIServicesException;
 
-    public void createRoomAccessPermission(String roomUrl, int userId);
+    public void createRoomAccessPermission(String roomUrl, String username) throws BoardUIServicesException;
 
     public List<File> getRoomFiles(int roomId) throws BoardUIServicesException;
 

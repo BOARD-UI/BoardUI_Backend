@@ -59,19 +59,27 @@ public class BoardUIServices implements IBoardUIServices{
                 newFile.setContent(content);
                 newFile.setRoomId(roomId);
                 newFile.setRequestId(1);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
             fs.addFile(newFile);
         }
     }
 
     @Override
-    public void createRoomAccessPermission(String roomUrl, int userId){
-        Room currentRoom = rs.getRoomByURL(roomUrl);
-        Permission permission = new Permission();
-        permission.setRoomId(currentRoom.getRoomId());
-        permission.setUserId(userId);
-        permission.setType("Access");
-        ps.savePermission(permission);
+    public void createRoomAccessPermission(String roomUrl, String username) throws BoardUIServicesException{
+        try {
+            Room currentRoom = rs.getRoomByURL(roomUrl);
+            User currentUser = us.getUserByUsername(username);
+            Permission permission = new Permission();
+            permission.setRoomId(currentRoom.getRoomId());
+            permission.setUserId(currentUser.getId());
+            permission.setType("Access");
+            ps.savePermission(permission);
+        } catch (Exception e) {
+            throw new BoardUIServicesException("Room not found");
+        }
+        
     }
 
     @Override
@@ -88,6 +96,10 @@ public class BoardUIServices implements IBoardUIServices{
     @Override
     public void createUser(User user) throws BoardUIServicesException{
         us.addUser(user); 
+    }
+
+    public void removeRoomAccessPermission(int roomId, String username){
+        ps.removePermission(roomId, username);
     }
     
 }

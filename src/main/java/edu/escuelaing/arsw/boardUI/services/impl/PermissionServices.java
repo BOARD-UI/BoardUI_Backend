@@ -19,5 +19,9 @@ public class PermissionServices implements IPermissionServices{
         pp.savePermission(permission);
         
     }
+
+    public void removePermission(int roomId, String username){
+        pp.removePermission(roomId, username);
+    }
     
 }

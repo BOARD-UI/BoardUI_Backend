@@ -1,5 +1,9 @@
 package edu.escuelaing.arsw.boardUI.controllers;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -8,40 +12,58 @@ import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import edu.escuelaing.arsw.boardUI.model.StringChange;
-
 @Controller
 public class STOMPController {
 	
 	@Autowired
 	SimpMessagingTemplate msgt;
 
+	ConcurrentHashMap<String, List<String>> roomFileHashMap = new ConcurrentHashMap<>();
+	ConcurrentHashMap<String, List<String>> roomCanvasHashMap = new ConcurrentHashMap<>();
+	
+
+	/* Room STOMP controller */
+	@CrossOrigin
+	@MessageMapping("/app/room.{roomId}")    
+	public void handleRoomEvent(String roomEvent, @DestinationVariable String roomId) throws Exception {
+		msgt.convertAndSend("/app/room."+roomId, roomEvent);
+	}
+
 	/* Code editor STOMP controller */
 	@CrossOrigin
-	@MessageMapping("/app/roomFile.{fileId}")    
-	public void handleChangeEvent(StringChange strChange, @DestinationVariable String fileId) throws Exception {
-		msgt.convertAndSend("/app/roomFile."+fileId, strChange);
+	@MessageMapping("/app/roomFile.{roomFileId}")    
+	public String handleChangeEvent(String strChange, @DestinationVariable String roomFileId) throws Exception {
+		for(String key: roomFileHashMap.keySet()){
+			System.out.println(key);
+		}
+		roomFileHashMap.get(roomFileId).add(strChange);
+		return strChange;
 	}
 
 	@CrossOrigin
-	@SubscribeMapping("/app/roomFile.{fileId}")
-	public String initialStringReply() throws Exception {
-		return "hello there!";
-	}
-
-
-	/* Drawer STOMP controller */
-	@CrossOrigin
-	@MessageMapping("/app/roomCanvas.{fileId}")    
-	public void handleDrawEvent(StringChange drawChange, @DestinationVariable String fileId) throws Exception {
-		msgt.convertAndSend("/app/roomFile."+fileId, drawChange);
-	}
-
-	@CrossOrigin
-	@SubscribeMapping("/app/roomCanvas.{fileId}")
-	public String initialDrawReply() throws Exception {
-		return "hello there!";
+	@SubscribeMapping("/app/roomFile.{roomFileId}")
+	public List<String> initialStringReply(@DestinationVariable String roomFileId) throws Exception {
+		if (!roomFileHashMap.keySet().contains(roomFileId)) roomFileHashMap.put(roomFileId, new LinkedList<String>());
+		for(String key: roomFileHashMap.keySet()){
+			System.out.println(key);
+		}
+		return roomFileHashMap.get(roomFileId);
 	}
 	
+	/* Drawer STOMP controller */
+	@CrossOrigin
+	@MessageMapping("/app/roomCanvas.{roomFileId}")    
+	public String handleDrawEvent(String drawChange, @DestinationVariable String roomFileId) throws Exception {
+		roomCanvasHashMap.get(roomFileId).add(drawChange);
+		return drawChange;
+	}
+
+	@CrossOrigin
+	@SubscribeMapping("/app/roomCanvas.{roomFileId}")
+	public List<String> initialDrawReply(@DestinationVariable String roomFileId) throws Exception {
+		
+		if (!roomCanvasHashMap.contains(roomFileId)) roomCanvasHashMap.put(roomFileId, new LinkedList<String>());
+		return roomCanvasHashMap.get(roomFileId);
+	}
 
 }

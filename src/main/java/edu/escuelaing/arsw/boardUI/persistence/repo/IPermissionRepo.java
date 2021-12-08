@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import edu.escuelaing.arsw.boardUI.model.Permission;
 
-public interface IPermissionRepo extends JpaRepository <Permission, Integer>{}
+public interface IPermissionRepo extends JpaRepository <Permission, Integer>{
+    void deleteByPermissionId(int permissionId);
+}

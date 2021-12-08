@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class Permission { 
 
     @Id
-    @Column(name = "permission_id")
+    @Column(name = "permissions_id")
     private int permissionId;
 
     @Column(name = "user_id")
