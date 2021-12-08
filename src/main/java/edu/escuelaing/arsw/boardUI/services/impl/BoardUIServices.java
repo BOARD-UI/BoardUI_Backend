@@ -83,14 +83,14 @@ public class BoardUIServices implements IBoardUIServices{
     }
 
     @Override
-    public boolean authenticateUser(String username, String password){
-        boolean isAuthenticated = true;
+    public String authenticateUser(String username, String password){
+        String userEmail = null;
         try {
-            isAuthenticated = us.getUserByUsername(username).getPassword().equals(password);
+            userEmail = us.getUserByUsername(username).getEmail();
         } catch (BoardUIServicesException e) {
-            isAuthenticated = false;
+            userEmail = null;
         }
-        return isAuthenticated;
+        return userEmail;
     }
 
     @Override

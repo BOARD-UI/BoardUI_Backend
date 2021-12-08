@@ -2,6 +2,7 @@ package edu.escuelaing.arsw.boardUI.controllers;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Controller
-public class STOMPController {
+public class StompController {
 	
 	@Autowired
 	SimpMessagingTemplate msgt;
@@ -25,8 +26,14 @@ public class STOMPController {
 	/* Room STOMP controller */
 	@CrossOrigin
 	@MessageMapping("/app/room.{roomId}")    
-	public void handleRoomEvent(String roomEvent, @DestinationVariable String roomId) throws Exception {
-		msgt.convertAndSend("/app/room."+roomId, roomEvent);
+	public String handleRoomEvent(Map<String, String> roomChange, @DestinationVariable String roomId) throws Exception {
+		String response = "none";
+		if (roomChange.get("type") == "update") response = "update";
+		else if (roomChange.get("type") == "save"){
+			if (roomChange.get("fileType") == "canvas") roomCanvasHashMap.put(roomChange.get("roomFileId"), new LinkedList<String>());
+			else if (roomChange.get("fileType") == "file") roomFileHashMap.put(roomChange.get("roomFileId"), new LinkedList<String>());
+		}
+		return response;
 	}
 
 	/* Code editor STOMP controller */

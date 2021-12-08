@@ -2,6 +2,8 @@ package edu.escuelaing.arsw.boardUI.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 /**
@@ -18,6 +20,7 @@ import javax.persistence.Table;
 public class Permission { 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "permissions_id")
     private int permissionId;
 

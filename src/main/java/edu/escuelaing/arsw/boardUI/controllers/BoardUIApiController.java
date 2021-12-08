@@ -43,8 +43,8 @@ public class BoardUIApiController {
 
     @CrossOrigin
     @RequestMapping(path = "/authentication", method = RequestMethod.POST)
-    public ResponseEntity<?> authenticateUser(@RequestParam("username") String username, @RequestParam("password") String password){
-        return new ResponseEntity<>(bs.authenticateUser(username, password),HttpStatus.OK);
+    public ResponseEntity<?> authenticateUser(@RequestBody Map<String, String> body){
+        return new ResponseEntity<>(bs.authenticateUser(body.get("username"), body.get("password")),HttpStatus.OK);
     }
 
     @CrossOrigin

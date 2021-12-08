@@ -8,7 +8,7 @@ import edu.escuelaing.arsw.boardUI.model.*;
 
 public interface IBoardUIServices {
     
-    public boolean authenticateUser(String username, String password);
+    public String authenticateUser(String username, String password);
 
     public void createUser(User user) throws BoardUIServicesException;
 
