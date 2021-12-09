@@ -21,5 +21,7 @@ public interface IBoardUIServices {
     public List<File> getRoomFiles(int roomId) throws BoardUIServicesException;
 
     public void createNewFile(MultipartFile file, String extension, int roomId);
+
+    public void updateFileContent(String id, String content);
     
 }

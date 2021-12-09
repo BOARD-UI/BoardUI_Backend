@@ -102,4 +102,8 @@ public class BoardUIServices implements IBoardUIServices{
         ps.removePermission(roomId, username);
     }
     
+    public void updateFileContent(String id, String content){
+        fs.updateContentById(Integer.parseInt(id) , content);
+    }
+
 }

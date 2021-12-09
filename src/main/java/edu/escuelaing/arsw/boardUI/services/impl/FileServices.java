@@ -19,4 +19,8 @@ public class FileServices implements IFileServices{
     public void addFile(File file) {
         rp.saveFile(file);
     }
+
+    public void updateContentById(int id, String content){
+        rp.updateContentById(id, content);
+    }
 }

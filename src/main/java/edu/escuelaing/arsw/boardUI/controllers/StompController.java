@@ -40,9 +40,6 @@ public class StompController {
 	@CrossOrigin
 	@MessageMapping("/app/roomFile.{roomFileId}")    
 	public String handleChangeEvent(String strChange, @DestinationVariable String roomFileId) throws Exception {
-		for(String key: roomFileHashMap.keySet()){
-			System.out.println(key);
-		}
 		roomFileHashMap.get(roomFileId).add(strChange);
 		return strChange;
 	}
@@ -51,9 +48,6 @@ public class StompController {
 	@SubscribeMapping("/app/roomFile.{roomFileId}")
 	public List<String> initialStringReply(@DestinationVariable String roomFileId) throws Exception {
 		if (!roomFileHashMap.keySet().contains(roomFileId)) roomFileHashMap.put(roomFileId, new LinkedList<String>());
-		for(String key: roomFileHashMap.keySet()){
-			System.out.println(key);
-		}
 		return roomFileHashMap.get(roomFileId);
 	}
 	
@@ -69,7 +63,7 @@ public class StompController {
 	@SubscribeMapping("/app/roomCanvas.{roomFileId}")
 	public List<String> initialDrawReply(@DestinationVariable String roomFileId) throws Exception {
 		
-		if (!roomCanvasHashMap.contains(roomFileId)) roomCanvasHashMap.put(roomFileId, new LinkedList<String>());
+		if (!roomCanvasHashMap.keySet().contains(roomFileId)) roomCanvasHashMap.put(roomFileId, new LinkedList<String>());
 		return roomCanvasHashMap.get(roomFileId);
 	}
 

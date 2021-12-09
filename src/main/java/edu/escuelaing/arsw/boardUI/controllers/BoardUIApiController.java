@@ -3,7 +3,6 @@ package edu.escuelaing.arsw.boardUI.controllers;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -114,9 +113,16 @@ public class BoardUIApiController {
         }
     }
 
-    @RequestMapping(path = "/message", method = RequestMethod.GET)
-	public String message() {
-		return "Congrats, Application Deployed Successfully";
-	}
+    @CrossOrigin
+    @RequestMapping(path = "/file/update", method = RequestMethod.POST)
+	public ResponseEntity<?> updateFileContent(@RequestBody Map<String, String> body) {
+        try {
+            bs.updateFileContent(body.get("id"), body.get("content"));
+            return new ResponseEntity<>(HttpStatus.OK);    
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 	
 }

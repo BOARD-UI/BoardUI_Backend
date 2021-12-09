@@ -20,10 +20,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '8'
-          DATABASE_URL: ${{ secrets.DATABASEURL }}
-          DATABASE_USERNAME: ${{ secrets.DATABASEUSERNAME }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASEPASSWORD }}
-          DATABASE_DIALECT: ${{ secrets.DATABASEDIALECT }}
 
       - name: Build with Maven
         run: mvn clean install
@@ -54,8 +50,4 @@ jobs:
           app-name: 'BoardUI-Back'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0F673D83F15E4176B85183D8CD61B052 }}
-          DATABASEURL: ${{ secrets.DATABASEURL }}
-          DATABASE_USERNAME: ${{ secrets.DATABASEUSERNAME }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASEPASSWORD }}
-          DATABASE_DIALECT: ${{ secrets.DATABASEDIALECT }}
           package: 'BOARD-UI-0.0.1-SNAPSHOT.jar'
